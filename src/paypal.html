@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayPal Demo</title>
+</head>
+<body>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AaVoNMqYKtvTvDefKizxIv7xL0Oi9eO2nvTdICd1ElBKHN_SRcHB615tytW3J5b11Y6uQ1zZNiP52tLh"></script>
+
+    <h1>This is my PayPal Demo</h1>
+    <div id="paypal-button-container"></div>
+
+    <script>
+
+        const product = {
+            price: 1.07,
+            description: 'This is a test of the api',
+            img: 'picture.png'
+        }
+
+        paypal.Buttons({
+            style: {
+                layout: 'horizontal',
+                tagline: false,
+                color: 'black'
+            },
+            createOrder: function( data, actions ) {
+                return actions.order.create({
+                    purchase_units: [{
+                        description: product.description,
+                        amount: {
+                            value: product.price
+                        }
+                    }]
+                });
+            },
+            onApprove: async ( data, actions ) => {
+
+                const order = await actions.order.capture();
+                console.log(order);
+
+            }
+
+        }).render('#paypal-button-container');
+
+    </script>
+
+    <script>
+        
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,20 @@
+$bg-alt: rgba(242, 242, 237, 1);
+$bg: rgba(247, 247, 242, 1);
+$accent: rgba(247, 173, 103, 1);
+$font-alt: rgba(38, 38, 37, 1);
+$font: rgba(48, 48, 47, 1);
+
+:root {
+    --accent-color: #f7ad67;
+    --bg-color: #f7f7f2;
+    --bg-color-alt: #f2f2ed;
+    --font-color: #30302f;
+    --font-color-alt: #262625;
+
+    @media( prefers-color-scheme: dark ) {
+        --bg-color: #262625;
+        --bg-color-alt: #30302f;
+        --font-color: #f2f2ed;
+        --font-color-alt: #f7f7f2;
+    }
+}
