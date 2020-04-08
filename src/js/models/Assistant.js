@@ -298,6 +298,31 @@ class Assistant {
         return this.cycle();
     }
 
+
+    async fadeInOut( period1, period2, doWork ) {
+        // Set Opacity to 0
+        this.css({
+            opacity: 0
+        });
+
+        // Delay By Specified Period 1
+        await this.constructor.timeout(period1);
+
+        // Change Map Theme After FadeOut is Complete
+        doWork();
+
+        // Delay By Specified Period 2
+        await this.constructor.timeout(period2);
+
+        // Set Opacity to 0
+        this.css({
+            opacity: 1
+        });
+
+        return this.cycle();
+    }
+
+
     async delay( time ) {
         await this.constructor.timeout(time);
         return this.cycle();
@@ -506,3 +531,7 @@ class phpRequest {
 // Bind Shortcut
 export const ajax = phpRequest.queue;
 export const domSelect = Assistant.init;
+export const delay = async time => {
+    await Assistant.timeout(time);
+    return true;
+}

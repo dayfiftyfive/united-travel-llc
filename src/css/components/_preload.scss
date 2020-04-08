@@ -1,0 +1,77 @@
+@keyframes preloadSpin {
+    
+    from {
+        transform: rotate(0);
+    }
+    
+    to {
+        transform: rotate(359deg);
+    }
+    
+}
+
+@keyframes preloadFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.preload {
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: preloadFadeIn 1s ease-out;
+    transition: all 1s ease-in;
+    
+    &__spinner {
+        
+        height: 30rem;
+        width: 30rem;
+        --spinner-border: .5rem solid;
+        --spinner-border-half: var(--spinner-border) RGBA( var(--accent-rgb), .25 );
+        
+        @include respond(phone) {
+            
+            height: 20rem;
+            width: 20rem;
+            
+        }
+        
+        border-top: var(--spinner-border) var(--accent-color);
+        border-bottom: var(--spinner-border-half);
+        border-left: var(--spinner-border-half);
+        border-right: var(--spinner-border-half);
+        
+        border-radius: 50%;
+        
+        transition: all .4s ease-in;
+        animation: preloadSpin 1s ease-out infinite;
+        
+    }
+    
+    &__logo {
+        
+        height: auto;
+        width: 20rem;
+        
+        @include respond(phone) {
+            
+            width: 13rem;
+            
+        }
+        
+        fill: var(--accent-color);
+        
+        @include centerBox;
+        transition: background-color 1s, color 1s, border-color 1s;
+        transition-timing-function: ease-in;
+        
+    }
+    
+}

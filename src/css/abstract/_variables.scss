@@ -5,13 +5,16 @@ $font-alt: rgba(38, 38, 37, 1);
 $font: rgba(48, 48, 47, 1);
 
 :root {
-    --accent-color: #f7ad67;
+    --accent-color: #376bb0;
+    --accent-rgb: 55, 107, 176;
     --bg-color: #f7f7f2;
     --bg-color-alt: #f2f2ed;
     --font-color: #30302f;
     --font-color-alt: #262625;
 
     @media( prefers-color-scheme: dark ) {
+        --accent-color: #f7ad67;
+        --accent-rgb: 247, 173, 103;
         --bg-color: #262625;
         --bg-color-alt: #30302f;
         --font-color: #f2f2ed;

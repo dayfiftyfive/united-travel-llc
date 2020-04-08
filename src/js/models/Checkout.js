@@ -18,14 +18,11 @@ export default class Checkout {
             loaded: {
                 rendered: false,
                 square: false,
-                paypal: false
+                paypal: false,
+                full: false
             }
         };
         this.minLoadTime = 2000;
-    }
-
-    pending() {
-
     }
 
     square() {
@@ -42,7 +39,7 @@ export default class Checkout {
         const ajaxurl = '../checkout/process-card.php';
 
         // Create and initialize a payment form object
-        const paymentForm = new SqPaymentForm({
+        this.squareForm = new SqPaymentForm({
 
             applicationId: "sandbox-sq0idb-Vm1E4Lk9nHYcuk606b-XsA",
             locationId: "ZDDKPX6X303P5",
@@ -160,7 +157,7 @@ export default class Checkout {
         });
 
         // Build Form
-        paymentForm.build();
+        this.squareForm.build();
 
 
         this.selector.listenFor("click", "button.button-credit-card", e => {
@@ -169,7 +166,7 @@ export default class Checkout {
 
             this.state.status = 'pending';
 
-            paymentForm.requestCardNonce();
+            this.squareForm.requestCardNonce();
 
         });
 
@@ -186,12 +183,14 @@ export default class Checkout {
             merchant: this.merchant,
         }
 
-        paypal.Buttons({
+        const theme = window.theme === 'dark' ? 'silver' : 'black';
+        
+        this.paypalButton = paypal.Buttons({
 
             style: {
                 layout: 'horizontal',
                 tagline: false,
-                color: 'black',
+                color: theme,
                 height: 45
             },
 
@@ -216,12 +215,21 @@ export default class Checkout {
         
             }
         
-        }).render('#paypal-button-container').then(r => this.loadComplete('paypal') );
+        });
+        
+        this.paypalButton.render('#paypal-button-container').then( () => this.loadComplete('paypal') );
     }
 
     destroy() {
-        console.log('destroy the checkout form');
+        this.squareForm.destroy();
+        this.paypal.close();
     }
+
+    changeTheme() {
+        this.paypalButton.close();
+        this.paypal();
+    }
+
 
     load() {
 
@@ -235,6 +243,8 @@ export default class Checkout {
         this.state.loaded[ key ] = true;
         
         if ( !this.state.loaded.rendered || !this.state.loaded.paypal || !this.state.loaded.square ) return;
+
+        if ( this.state.loaded.full ) return;
 
         this.loadFinish = new Date();
         this.elapsedTime = this.loadFinish - this.loadStart;
@@ -253,6 +263,8 @@ export default class Checkout {
             .then(f => f.removeClass("transparent") );
 
         }, time );
+
+        this.state.loaded.full = true;
 
     }
 

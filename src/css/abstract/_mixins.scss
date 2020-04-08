@@ -37,3 +37,12 @@
         @media(min-width: 95em) { @content }; // 1520
     }
 }
+
+@mixin theme($type) {
+    @if $type == light {
+        @media( prefers-color-scheme: light ) { @content }; // Light Theme
+    }
+    @if $type == dark {
+        @media( prefers-color-scheme: dark ) { @content }; // Dark Theme
+    }
+}
