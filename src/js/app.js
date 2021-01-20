@@ -75,3 +75,5 @@ const controlCheckout = () => {
     }
 
 }
+
+controlCheckout();
